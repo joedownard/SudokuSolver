@@ -1,19 +1,20 @@
 package main
 
 import (
-  "fmt"
-  "context"
-  "github.com/aws/aws-lambda-go/lambda"
+	"context"
+	"fmt"
+
+	"github.com/aws/aws-lambda-go/lambda"
 )
 
-type MyEvent struct {
-  Name string `json:"name"`
+type SudokuEvent struct {
+	Board [][]rune `json:"board"`
 }
 
-func HandleRequest(ctx context.Context, name MyEvent) (string, error) {
-  return fmt.Sprintf("Hello %s!", name.Name ), nil
+func HandleRequest(ctx context.Context, sudokuEvent SudokuEvent) (string, error) {
+	return fmt.Sprintf("Hello %c!", sudokuEvent.Board[0][0]), nil
 }
 
 func main() {
-  lambda.Start(HandleRequest)
+	lambda.Start(HandleRequest)
 }

@@ -10,6 +10,14 @@
       "StackName": "amplify-sudokusolverapp-dev-234346",
       "StackId": "arn:aws:cloudformation:eu-west-2:083551419963:stack/amplify-sudokusolverapp-dev-234346/ffb96760-c8d6-11ec-b021-0664151e9f2a",
       "AmplifyAppId": "dsxgif4647s99"
+    },
+    "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "dsxgif4647s99",
+          "type": "cicd"
+        }
+      }
     }
   }
 }
