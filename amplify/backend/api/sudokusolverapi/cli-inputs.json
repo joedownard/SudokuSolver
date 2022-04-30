@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/solveSudoku": {
+      "name": "/solveSudoku",
+      "lambdaFunction": "sudokusolverapp65f9ab3a",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}
