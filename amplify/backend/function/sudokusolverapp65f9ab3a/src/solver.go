@@ -88,7 +88,7 @@ func initialiseState(board [9][9]int) solveState {
 	for row := 0; row < 9; row++ {
 		for col := 0; col < 9; col++ {
 			if board[row][col] != 0 {
-				fillCell(state, cell{
+				state.fillCell(cell{
 					cellValue: board[row][col],
 					rowNum:    row + 1,
 					colNum:    col + 1,
@@ -100,34 +100,54 @@ func initialiseState(board [9][9]int) solveState {
 	return state
 }
 
-func fillCell(state solveState, c cell) solveState {
-	state.board[c.rowNum-1][c.colNum-1] = c.cellValue
+func (s solveState) fillCell(c cell) solveState {
+	s.board[c.rowNum-1][c.colNum-1] = c.cellValue
 
-	for filled_constraint := range state.cellToConstraints[c] {
-		for cell_which_fills_constraint := range state.constraintToCells[filled_constraint] {
-			for other_constraint_filled_by_cell := range state.cellToConstraints[cell_which_fills_constraint] {
+	for filled_constraint := range s.cellToConstraints[c] {
+		for cell_which_fills_constraint := range s.constraintToCells[filled_constraint] {
+			for other_constraint_filled_by_cell := range s.cellToConstraints[cell_which_fills_constraint] {
 				if filled_constraint != other_constraint_filled_by_cell {
-					delete(state.constraintToCells[other_constraint_filled_by_cell], cell_which_fills_constraint)
+					delete(s.constraintToCells[other_constraint_filled_by_cell], cell_which_fills_constraint)
 				}
 			}
-			delete(state.cellToConstraints, cell_which_fills_constraint)
+			delete(s.cellToConstraints, cell_which_fills_constraint)
 		}
-		delete(state.constraintToCells, filled_constraint)
+		delete(s.constraintToCells, filled_constraint)
 	}
 
-	return state
+	return s
 }
 
-func getFewestOptions(state solveState) constraint {
+func (s solveState) getFewestOptions() constraint {
 	count := 10
 	var current constraint
-	for cons, cells := range state.constraintToCells {
+	for cons, cells := range s.constraintToCells {
 		if len(cells) < count {
 			current = cons
 			count = len(cells)
 		}
 	}
 	return current
+}
+
+func solve(state solveState) (solveState, bool) {
+	if len(state.constraintToCells) == 0 {
+		return state, true
+	}
+
+	constraintWithFewestCells := state.getFewestOptions()
+
+	for cellOption := range state.constraintToCells[constraintWithFewestCells] {
+		newState := state.deepcopy()
+		newState = newState.fillCell(cellOption)
+		newState, solved := solve(newState)
+		if solved {
+			return newState, true
+		}
+
+	}
+
+	return state, false
 }
 
 func isBoardValid(board [9][9]int) bool {
@@ -153,26 +173,6 @@ func isBoardValid(board [9][9]int) bool {
 	}
 
 	return true
-}
-
-func solve(state solveState) (solveState, bool) {
-	if len(state.constraintToCells) == 0 {
-		return state, true
-	}
-
-	constraintWithFewestCells := getFewestOptions(state)
-
-	for cellOption := range state.constraintToCells[constraintWithFewestCells] {
-		newState := deepcopySolveState(state)
-		newState = fillCell(newState, cellOption)
-		newState, solved := solve(newState)
-		if solved {
-			return newState, true
-		}
-
-	}
-
-	return state, false
 }
 
 func SolveBoard(board [9][9]int) [9][9]int {

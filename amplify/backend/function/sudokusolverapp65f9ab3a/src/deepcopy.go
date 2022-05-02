@@ -23,10 +23,10 @@ func deepcopyConstraintsToCells(constraintsToCells map[constraint]map[cell]bool)
 	return newConstraintsToCell
 }
 
-func deepcopySolveState(state solveState) solveState {
+func (s solveState) deepcopy() solveState {
 	return solveState{
-		cellToConstraints: deepcopyCellToConstraints(state.cellToConstraints),
-		constraintToCells: deepcopyConstraintsToCells(state.constraintToCells),
-		board:             state.board,
+		cellToConstraints: deepcopyCellToConstraints(s.cellToConstraints),
+		constraintToCells: deepcopyConstraintsToCells(s.constraintToCells),
+		board:             s.board,
 	}
 }
