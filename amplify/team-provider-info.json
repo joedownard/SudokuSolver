@@ -1,20 +1,26 @@
 {
-  "dev": {
+  "sampledev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-sudokusolverapp-dev-234346-authRole",
-      "UnauthRoleArn": "arn:aws:iam::083551419963:role/amplify-sudokusolverapp-dev-234346-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::083551419963:role/amplify-sudokusolverapp-dev-234346-authRole",
+      "AuthRoleName": "amplify-sudokusolverapp-sampledev-110639-authRole",
+      "UnauthRoleArn": "arn:aws:iam::083551419963:role/amplify-sudokusolverapp-sampledev-110639-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::083551419963:role/amplify-sudokusolverapp-sampledev-110639-authRole",
       "Region": "eu-west-2",
-      "DeploymentBucketName": "amplify-sudokusolverapp-dev-234346-deployment",
-      "UnauthRoleName": "amplify-sudokusolverapp-dev-234346-unauthRole",
-      "StackName": "amplify-sudokusolverapp-dev-234346",
-      "StackId": "arn:aws:cloudformation:eu-west-2:083551419963:stack/amplify-sudokusolverapp-dev-234346/ffb96760-c8d6-11ec-b021-0664151e9f2a",
-      "AmplifyAppId": "dsxgif4647s99"
+      "DeploymentBucketName": "amplify-sudokusolverapp-sampledev-110639-deployment",
+      "UnauthRoleName": "amplify-sudokusolverapp-sampledev-110639-unauthRole",
+      "StackName": "amplify-sudokusolverapp-sampledev-110639",
+      "StackId": "arn:aws:cloudformation:eu-west-2:083551419963:stack/amplify-sudokusolverapp-sampledev-110639/64e2e0d0-c936-11ec-841e-0ab6a6d50cbe",
+      "AmplifyAppId": "d1xg4mwc113zy2"
     },
     "categories": {
+      "function": {
+        "sudokusolverapp65f9ab3a": {
+          "deploymentBucketName": "amplify-sudokusolverapp-sampledev-110639-deployment",
+          "s3Key": "amplify-builds/sudokusolverapp65f9ab3a-37687574757847356634-build.zip"
+        }
+      },
       "hosting": {
         "amplifyhosting": {
-          "appId": "dsxgif4647s99",
+          "appId": "d1xg4mwc113zy2",
           "type": "cicd"
         }
       }

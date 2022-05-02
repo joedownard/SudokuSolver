@@ -2,17 +2,39 @@ package main
 
 import (
 	"context"
-	"fmt"
+	"encoding/json"
+	"log"
 
+	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 )
 
 type SudokuEvent struct {
-	Board [][]rune `json:"board"`
+	Board [9][9]int `json:"board"`
 }
 
-func HandleRequest(ctx context.Context, sudokuEvent SudokuEvent) (string, error) {
-	return fmt.Sprintf("Hello %c!", sudokuEvent.Board[0][0]), nil
+func HandleRequest(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+
+	var inputBoard SudokuEvent
+	err := json.Unmarshal([]byte(request.Body), &inputBoard)
+	if err != nil {
+		log.Fatalf("unable to unmarshal request body, %v", err)
+	}
+
+	solvedBoardResponse := SudokuEvent{
+		Board: SolveBoard(inputBoard.Board),
+	}
+
+	res, err := json.Marshal(solvedBoardResponse)
+	if err != nil {
+		log.Fatalf("unable to marshal board, %v", err)
+	}
+
+	return events.APIGatewayProxyResponse{
+		Body:       string(res),
+		Headers:    map[string]string{"Access-Control-Allow-Origin": "*"},
+		StatusCode: 200,
+	}, nil
 }
 
 func main() {
